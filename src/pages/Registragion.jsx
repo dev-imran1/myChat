@@ -1,8 +1,9 @@
 import React from 'react';
-import {Grid,TextField,Button} from '@mui/material';
+import {Grid,TextField,Button, Alert} from '@mui/material';
 import '../pages/reglog.css';
 import Heading from '../components/Heading';
 import regimg from '../assets/regimg.png';
+import { Link } from 'react-router-dom';
 
 const Registragion = () => {
   return (
@@ -25,6 +26,9 @@ const Registragion = () => {
           </div>
           <div className="reg_btn">
           <Button variant="contained">Contained</Button>
+          <div className="navigate">
+            <Alert severity="warning">Already  have an account ? <Link to='/login'>Sign In</Link></Alert>
+          </div>
           </div>
           </div>
           
@@ -33,6 +37,12 @@ const Registragion = () => {
           <img className='regimg' src={regimg} alt="" />
         </Grid>
       </Grid>
+      {/* <Alert variant="filled" severity="warning">
+         This is a filled warning Alert.
+      </Alert> */}
+
+      
+
     </div>
   )
 }

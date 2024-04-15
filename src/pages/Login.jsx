@@ -1,9 +1,10 @@
 import React from 'react';
-import {Grid,TextField,Button} from '@mui/material';
+import {Grid,TextField,Button, Alert} from '@mui/material';
 import '../pages/reglog.css';
 import Heading from '../components/Heading';
 import logimg from '../assets/logimg.png';
 import google from '../assets/google.png'
+import { Link } from 'react-router-dom';
 
 const Registragion = () => {
   return (
@@ -25,6 +26,9 @@ const Registragion = () => {
           </div>
           <div className="reg_btn">
           <Button variant="contained">Login to Continue</Button>
+          <div className="navigate">
+            <Alert severity="warning">Don’t have an account ?  <Link to='/'>Sign up</Link></Alert>
+          </div>
           </div>
           </div>
           
