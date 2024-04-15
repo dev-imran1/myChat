@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.regimg{
+    width: 100vh;
+    object-fit: cover;
+}
+.regheading{
+    margin: 10px 0;
+}
+.regConatiner{
+    width: 50%;
+    margin-top: 30px;
+    margin-left: auto;
+}
+.inputConainer{
+    margin: 25px 0;
+}
+.inputConainer .MuiTextField-root{
+    width: 80%;
+}
+.MuiButton-root{
+    width: 80%;
+}
+.google{
+    width: 70%;
+    margin-top: 20px;
+    cursor: pointer;
+}
