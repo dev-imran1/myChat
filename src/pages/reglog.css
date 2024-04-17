@@ -16,7 +16,7 @@
     margin-left: auto;
 }
 .inputConainer{
-    margin: 25px 0;
+    margin: 20px 0;
 }
 .inputConainer .MuiTextField-root{
     width: 80%;
@@ -31,6 +31,35 @@
 }
 .MuiPaper-root{
     width: 80%;
-    margin: 20px 0;
-    background-color: transparent !important;
+}
+.eye_position{
+    position: relative;
+}
+
+.eye{
+    position: absolute;
+    top: 20px;
+    right: 85px;
+}
+.css-y8tvd1-MuiPaper-root-MuiAlert-root {
+   margin: 10px 0;
+    background-color:transparent !important;
+}
+
+
+/* forgot password */
+
+.forgot{
+    background-color: rgb(214, 197, 197);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.forgot Button{
+    width: 15%;
+    margin:  10px 0;
 }

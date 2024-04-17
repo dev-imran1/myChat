@@ -1,12 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Grid,TextField,Button, Alert} from '@mui/material';
 import '../pages/reglog.css';
 import Heading from '../components/Heading';
 import logimg from '../assets/logimg.png';
 import google from '../assets/google.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import LoadingButton from '@mui/lab/LoadingButton';
+import { toast } from 'react-toastify';
+
+let initialize = {
+  email: "",
+  password: '',
+  loader: false,
+  eye: false,
+}
+
 
 const Registragion = () => {
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  const navigate = useNavigate()
+  const notify = (msg) => toast(msg);
+  let [values, setvalues]= useState(initialize);
+  // let [errorCde, setErrorCde] = useState("");
+  // let [errorMsg,setErrorMsg] = useState("");
+
+
+
+    let handelGoogle =()=>{
+      signInWithPopup(auth, provider)
+    .then((result) => {
+    //  navigate("/")
+    })
+    }
+
+  let handelChangeLogin =(e)=>{
+    setvalues({
+      ...values,
+      [e.target.name] : e.target.value
+    })
+  }
+
+let handelLogin =()=>{
+  let {email,password} =values;
+
+  setvalues({
+    ...values,
+    loader:false,
+  })
+  signInWithEmailAndPassword(auth, email, password)
+  .then((user) => {
+    notify("Login Done")
+  }).catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    
+    if(errorCode === "auth/invalid-email"){
+      notify("Please Type Your Eamil & password")
+    }
+    if(errorCode === "auth/missing-password"){
+      notify("Please Type Your password")
+    }
+    if(errorCode === "auth/invalid-credential"){
+      notify("Email/Password Wrong")
+    }
+  });
+}
+
   return (
     <div>
       <Grid container spacing={0}>
@@ -16,22 +77,31 @@ const Registragion = () => {
           <Heading className='regheading' text="Login to your account!"/>
           </div>
           <div className="google">
-            <img className='google' src={google} alt="" />
+            <img className='google' src={google} alt="" onClick={handelGoogle}/>
           </div>
           <div className='inputConainer'>
-            <TextField id="outlined-basic" label="Email Address" variant="outlined" type='email'/>
+            <TextField onChange={handelChangeLogin} name='email' id="outlined-basic" label="Email Address" variant="outlined" type='email'/>
           </div>
           <div className='inputConainer'>
-            <TextField id="outlined-basic" label="password" variant="outlined" type='password'/>
+            <TextField onChange={handelChangeLogin} name='password' id="outlined-basic" label="password" variant="outlined" type='password'/>
           </div>
           <div className="reg_btn">
-          <Button variant="contained">Login to Continue</Button>
+          {values.loader
+            ?
+            <LoadingButton loading variant="outlined">
+            Submit
+          </LoadingButton>   
+            :
+            <Button onClick={handelLogin} variant="contained">Login to Continue</Button>
+          }
           <div className="navigate">
+            <div className='login__Alert'>
             <Alert severity="warning">Don’t have an account ?  <Link to='/'>Sign up</Link></Alert>
+            <Alert severity="warning">Forgot Password ?  <Link to='/forgotpassword'>Click Here</Link></Alert>
+            </div>
           </div>
           </div>
           </div>
-          
         </Grid>
         <Grid item xs={6}>
           <img className='logimg' src={logimg} alt="" />

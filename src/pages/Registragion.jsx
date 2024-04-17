@@ -1,11 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Grid,TextField,Button, Alert} from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import '../pages/reglog.css';
 import Heading from '../components/Heading';
 import regimg from '../assets/regimg.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword,sendEmailVerification } from "firebase/auth";
+import { FaEye,FaEyeSlash } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
+let initialize = {
+  email: "",
+  fullname: '',
+  password: '',
+  loader: false,
+  eye: false,
+  error:""
+}
 const Registragion = () => {
+  const notify = (msg) => toast(msg);
+  const navigate = useNavigate()
+  const auth = getAuth();
+  let [eamilError, setEmailError]= useState("");
+  let [nameError, setNameError]= useState("");
+  let [passwordError, setPasswordError]= useState("");
+  let [values, setvalues]=useState(initialize);
+ 
+  let handelChange =(e)=>{
+    setvalues({
+    ...values,
+    [e.target.name] : e.target.value
+    })
+  }
+
+  let handelClick = () =>{
+    let {email,fullname,password} =values;
+
+    if(!email){
+      // setvalues({
+      //   ...values,
+      //   error: "Enter your email"
+      // })    
+      setEmailError("Enter Your email")                  
+      return
+    }
+    if(!fullname){
+      // setvalues({
+      //   ...values,
+      //   error: "Enter your name"
+      // })
+      setNameError("Enter Your Name")
+      return
+    }
+    if(!password){
+      // setvalues({
+      //   ...values,
+      //   error: "type your password"
+      // })
+      setPasswordError("Enter Your Password")
+      return
+    }
+    createUserWithEmailAndPassword(auth, email, password,fullname).then((user) => {
+    sendEmailVerification(auth.currentUser).then(()=>{
+      notify("Please Your Email Verify")
+    })
+    setvalues({
+      email: "",
+      fullname: '',
+      password: '',
+      loader:false
+    })
+    navigate("/login")
+  })
+  }
+let handelEye = ()=>{
+  setvalues({
+    ...values,
+    eye:!values.eye
+  }
+  )
+}
   return (
     <div>
       <Grid container spacing={0}>
@@ -16,22 +90,54 @@ const Registragion = () => {
           <p>Free register and you can enjoy it</p>
           </div>            
              <div className='inputConainer'>
-            <TextField id="outlined-basic" label="Email Address" variant="outlined" type='email'/>
+            <TextField onChange={handelChange} name='email' value={values.email} id="outlined-basic" label="Email Address" variant="outlined" type='email'/>
+           {/* {values.error.includes("email") &&
+            <Alert severity="error">{values.error}</Alert>
+           } */}
+           {eamilError && 
+            <Alert severity="error">{eamilError}</Alert>
+           }
           </div>
             <div className='inputConainer'>
-            <TextField id="outlined-basic" label="full name" variant="outlined" type='text'/>
+            <TextField onChange={handelChange} name='fullname' value={values.fullname} id="outlined-basic" label="full name" variant="outlined" type='text'/>
+            {/* {values.error.includes("name") &&
+            <Alert severity="error">{values.error}</Alert>
+           } */}
+            {nameError && 
+            <Alert severity="error">{nameError}</Alert>
+           }
           </div>
-            <div className='inputConainer'>
-            <TextField id="outlined-basic" label="password" variant="outlined" type='password'/>
+            <div className='inputConainer eye_position'>
+            <TextField onChange={handelChange} name='password' value={values.password} id="outlined-basic" label="password" variant="outlined" type={values.eye? "text" : "password"}/>
+            {/* {values.error.includes("password")  &&
+            <Alert severity="error">{values.error}</Alert>
+           } */}
+            {passwordError && 
+            <Alert severity="error">{passwordError}</Alert>
+           }
+            <div className="eye" onClick={handelEye}>
+              {values.eye
+              ?
+              <FaEye />
+              :
+              <FaEyeSlash />
+            }
+            </div>
           </div>
           <div className="reg_btn">
-          <Button variant="contained">Contained</Button>
+            {values.loader
+            ?
+          <LoadingButton loading variant="outlined">
+            Submit
+          </LoadingButton>   
+            :
+            <Button onClick={handelClick} variant="contained">Contained</Button>
+          }
+          </div>
           <div className="navigate">
             <Alert severity="warning">Already  have an account ? <Link to='/login'>Sign In</Link></Alert>
           </div>
-          </div>
-          </div>
-          
+          </div>         
         </Grid>
         <Grid xs={6}>
           <img className='regimg' src={regimg} alt="" />
@@ -40,9 +146,6 @@ const Registragion = () => {
       {/* <Alert variant="filled" severity="warning">
          This is a filled warning Alert.
       </Alert> */}
-
-      
-
     </div>
   )
 }
