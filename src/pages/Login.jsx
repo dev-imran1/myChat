@@ -10,12 +10,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { toast } from 'react-toastify';
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 
-let initialize = {
-  email: "",
-  password: '',
-  loader: false,
-  eye: false,
-}
 
 
 const Registragion = () => {
@@ -23,11 +17,15 @@ const Registragion = () => {
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate()
   const notify = (msg) => toast(msg);
+
+  let initialize = {
+    email: "",
+    password: '',
+    loader: false,
+    eye: false,
+  }
+  
   let [values, setvalues]= useState(initialize);
-  // let [errorCde, setErrorCde] = useState("");
-  // let [errorMsg,setErrorMsg] = useState("");
-
-
 
     let handelGoogle =()=>{
       signInWithPopup(auth, provider)
@@ -59,7 +57,8 @@ let handelLogin =()=>{
   })
   signInWithEmailAndPassword(auth, email, password)
   .then((user) => {
-    notify("Login Done")
+    notify("Login Done");
+    navigate("/home")
   }).catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;

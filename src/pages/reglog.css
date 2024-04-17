@@ -63,3 +63,12 @@
     width: 15%;
     margin:  10px 0;
 }
+
+
+/* logout  */
+.singoutBtn{
+    width: 10%;
+    position: absolute !important;
+    top: 50% !important;
+    left: 45% !important;
+}
