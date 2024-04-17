@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { toast } from 'react-toastify';
+import { FaEye,FaEyeSlash } from "react-icons/fa";
 
 let initialize = {
   email: "",
@@ -34,6 +35,13 @@ const Registragion = () => {
     //  navigate("/")
     })
     }
+    let handelEye = ()=>{
+      setvalues({
+        ...values,
+        eye:!values.eye
+      }
+      )
+    }
 
   let handelChangeLogin =(e)=>{
     setvalues({
@@ -55,7 +63,7 @@ let handelLogin =()=>{
   }).catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    
+
     if(errorCode === "auth/invalid-email"){
       notify("Please Type Your Eamil & password")
     }
@@ -83,7 +91,15 @@ let handelLogin =()=>{
             <TextField onChange={handelChangeLogin} name='email' id="outlined-basic" label="Email Address" variant="outlined" type='email'/>
           </div>
           <div className='inputConainer'>
-            <TextField onChange={handelChangeLogin} name='password' id="outlined-basic" label="password" variant="outlined" type='password'/>
+            <TextField onChange={handelChangeLogin} value={values.password}  name='password' id="outlined-basic" label="password" variant="outlined" type={values.eye? "text" : "password"}/>
+            <div className="eye" onClick={handelEye}>
+              {values.eye
+              ?
+              <FaEye />
+              :
+              <FaEyeSlash />
+            }
+            </div>
           </div>
           <div className="reg_btn">
           {values.loader
