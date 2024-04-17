@@ -58,7 +58,7 @@ let handelLogin =()=>{
   signInWithEmailAndPassword(auth, email, password)
   .then((user) => {
     notify("Login Done");
-    navigate("/home")
+    navigate("/chatting-app/home")
   }).catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;

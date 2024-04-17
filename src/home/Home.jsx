@@ -10,18 +10,12 @@ const Home = () => {
     const navigate = useNavigate()
     const notify = (msg) => toast(msg);
 
-
-
     let handelSignOUt =()=>{
     console.log('ami logout');
     signOut(auth).then(() => {
        notify("Logout Done")
         navigate("/login")
       })
-    //   .catch((error) => {
-    //     // An error happened.
-    //   });
-      
     }
 
   return (
