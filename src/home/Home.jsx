@@ -1,27 +1,34 @@
 import React from 'react'
 import {Grid,TextField,Button, Alert} from '@mui/material';
-import { getAuth,signOut} from "firebase/auth";
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-
+import '../home/home.css'
 
 const Home = () => {
-    const auth = getAuth();
-    const navigate = useNavigate()
-    const notify = (msg) => toast(msg);
-
-    let handelSignOUt =()=>{
-    console.log('ami logout');
-    signOut(auth).then(() => {
-       notify("Logout Done")
-        navigate("/login")
-      })
-    }
 
   return (
     <>
-     <Button className='singoutBtn' onClick={handelSignOUt} variant="contained">Log Out</Button>
-    </>
+   <Grid container spacing={0}>
+  <Grid xs={4} className='home__box'>
+  <Grid className='home__box-item'  xs={4}>
+    <h1>xs=4</h1>
+  </Grid>
+  <Grid className='home__box-item'  xs={4}>
+    <h1>xs=4</h1>
+  </Grid>
+  <Grid className='home__box-item'  xs={4}>
+    <h1>xs=4</h1>
+  </Grid>
+  <Grid className='home__box-item'  xs={4}>
+    <h1>xs=4</h1>
+  </Grid>
+  <Grid className='home__box-item'  xs={4}>
+    <h1>xs=4</h1>
+  </Grid>
+  <Grid className='home__box-item'  xs={4}>
+    <h1>xs=4</h1>
+  </Grid>
+   </Grid>
+</Grid>
+    </> 
   )
 }
 

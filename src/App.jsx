@@ -15,6 +15,7 @@ import Home from './home/Home.jsx';
 import Message from './home/Message.jsx';
 import Setting from './home/Setting.jsx'
 import Logout from './home/Logout.jsx'
+import Notification from './home/Notification.jsx'
 import RootLayouts from './components/RootLayouts.jsx';
 
 
