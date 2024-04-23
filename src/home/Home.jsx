@@ -5,28 +5,29 @@ import Usrlist from "../List/Usrlist";
 import Mygroup from "../List/Mygroup";
 import Friend from "../List/Friend";
 import FriendRequest from "../List/FriendRequest";
-
+import GroupList from "../List/GroupList"
+import BlockList from "../List/BlockList";
 const Home = () => {
   return (
     <>
       <Grid container spacing={0}>
         <Grid item xs={4}>
+          <GroupList />
+        </Grid>
+        <Grid item xs={4}>
+          <Friend />
+        </Grid>
+        <Grid item xs={4}>
           <Usrlist />
         </Grid>
         <Grid item xs={4}>
-          <h1>hello</h1>
+          <FriendRequest />
         </Grid>
         <Grid item xs={4}>
-          <h1>hello</h1>
+          <Mygroup />
         </Grid>
         <Grid item xs={4}>
-          <h1>hello</h1>
-        </Grid>
-        <Grid item xs={4}>
-          <h1>hello</h1>
-        </Grid>
-        <Grid item xs={4}>
-          <h1>hello</h1>
+          <BlockList />
         </Grid>
       </Grid>
     </>

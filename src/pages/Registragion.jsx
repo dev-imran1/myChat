@@ -5,7 +5,8 @@ import '../pages/reglog.css';
 import Heading from '../components/Heading';
 import regimg from '../assets/regimg.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword,sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,sendEmailVerification,updateProfile } from "firebase/auth";
+import { getDatabase, push, ref, set } from "firebase/database";
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
@@ -21,6 +22,7 @@ const Registragion = () => {
   const notify = (msg) => toast(msg);
   const navigate = useNavigate()
   const auth = getAuth();
+  const db = getDatabase();
   let [eamilError, setEmailError]= useState("");
   let [nameError, setNameError]= useState("");
   let [passwordError, setPasswordError]= useState("");
@@ -61,9 +63,24 @@ const Registragion = () => {
       return
     }
     createUserWithEmailAndPassword(auth, email, password,fullname).then((user) => {
-    sendEmailVerification(auth.currentUser).then(()=>{
-      notify("Please Your Email Verify")
-    })
+      updateProfile(auth.currentUser, {
+        displayName: values.fullname,
+        photoURL: "https://i.ibb.co/F0vjXj8/images.png",
+        email: values.email
+      }).then(() => {
+        sendEmailVerification(auth.currentUser).then(()=>{
+          notify("Please Your Email Verify")
+          set(push(ref(db, 'users/')), {
+            username: values.fullname,
+            email: values.email,
+            profile_picture : user.user.photoURL
+          });
+        })
+      }).catch((error) => {
+        notify("Type your name")
+        console.log(error)
+      });
+      
     setvalues({
       email: "",
       fullname: '',
@@ -79,7 +96,9 @@ let handelEye = ()=>{
     eye:!values.eye
   }
   )
+  
 }
+
   return (
     <div>
       <Grid container spacing={0}>
