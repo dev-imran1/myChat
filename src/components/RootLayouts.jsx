@@ -8,18 +8,24 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
+import { getAuth } from "firebase/auth";
+
 
 const RootLayouts = () => {
   let location = useLocation();
+  const auth = getAuth();
+
   return (
     <>
       <Grid container spacing={0}>
-        <Grid xs={1}>
+        <Grid xs={2}>
           <div className="navbar">
             <div className="navbar__container">
               <div>
                 <img src={profile} alt="" />
-                <h4 className="profile__name">Imran Hossian</h4>
+                <h5 className="profile__name">{auth.currentUser.displayName}</h5>
+                <p className="profile__name">{auth.currentUser.email}</p>
+               
               </div>
               <ul className="icon__box">
                 <li>
@@ -86,7 +92,7 @@ const RootLayouts = () => {
             </div>
           </div>
         </Grid>
-        <Grid xs={11}>
+        <Grid xs={10}>
           <Outlet />
         </Grid>
       </Grid>

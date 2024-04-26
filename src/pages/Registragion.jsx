@@ -69,8 +69,9 @@ const Registragion = () => {
         email: values.email
       }).then(() => {
         sendEmailVerification(auth.currentUser).then(()=>{
+          console.log(user.user.uid)
           notify("Please Your Email Verify")
-          set(push(ref(db, 'users/')), {
+          set(ref(db, 'users/'+user.user.uid), {
             username: values.fullname,
             email: values.email,
             profile_picture : user.user.photoURL
