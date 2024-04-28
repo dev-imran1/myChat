@@ -9,11 +9,14 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { getAuth } from "firebase/auth";
-
+import { useSelector } from "react-redux";
 
 const RootLayouts = () => {
   let location = useLocation();
   const auth = getAuth();
+  let logindata = useSelector((state)=>state.logeduser.loginuser)
+
+  // console.log(logindata)
 
   return (
     <>
@@ -23,8 +26,8 @@ const RootLayouts = () => {
             <div className="navbar__container">
               <div>
                 <img src={profile} alt="" />
-                <h5 className="profile__name">{auth.currentUser.displayName}</h5>
-                <p className="profile__name">{auth.currentUser.email}</p>
+                <h5 className="profile__name">{logindata.displayName}</h5>
+                <p className="profile__name">{logindata.email}</p>
                
               </div>
               <ul className="icon__box">

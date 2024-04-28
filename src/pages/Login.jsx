@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, TextField, Button, Alert } from "@mui/material";
 import "../pages/reglog.css";
 import Heading from "../components/Heading";
@@ -14,12 +14,15 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { userdata } from "../features/counter/counterSlice";
 
 const Registragion = () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const notify = (msg) => toast(msg);
+  let dispatch = useDispatch();
 
   let initialize = {
     email: "",
@@ -32,7 +35,8 @@ const Registragion = () => {
 
   let handelGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
-      //  navigate("/")
+      // console.log(result)
+      navigate("/");
     });
   };
   let handelEye = () => {
@@ -57,13 +61,19 @@ const Registragion = () => {
       loader: false,
     });
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        notify("Login Done");
-        navigate("/chatting-app/home");
+      .then((user) => {
+        if (user.user.emailVerified) {
+          dispatch(userdata(user.user));
+          localStorage.setItem("user",JSON.stringify(user.user))
+          notify("Login Done");
+          navigate("/chatting-app/home");
+        } else {
+          notify("please verify your email");
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorMessage = error.message;
 
         if (errorCode === "auth/invalid-email") {
           notify("Please Type Your Eamil & password");

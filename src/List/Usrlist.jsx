@@ -4,15 +4,21 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import "./grouplist.css";
 import profile from "../assets/profile.png";
 import { Button } from "@mui/material";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, set, push, remove} from "firebase/database";
+import { useSelector } from "react-redux";
+
 
 const Usrlist = () => {
-  const auth = getAuth();
+  // const auth = getAuth();
   const db = getDatabase();
   let [userList, setUserList] = useState([]);
   let [friendRequest, setfriendRequest] = useState([]);
+  let logindata = useSelector((state) => state.logeduser.loginuser);
 
+
+
+// friend request
   useEffect(() => {
     const userRef = ref(db, "friendRequest/");
     onValue(userRef, (snapshot) => { 
@@ -24,32 +30,37 @@ const Usrlist = () => {
     });
   }, []);
 
+
+// user show
   useEffect(() => {
     const userRef = ref(db, "users/");
     onValue(userRef, (snapshot) => { 
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push({...item.val(), id: item.key});
+        // if(logindata.uid != item.key){
+          arr.push({...item.val(), id: item.key});
+        // }
       });
       setUserList(arr);
     });
   }, []);
 
+
+  // friend request create
   let handelFRequest = (item) => {
-    // console.log(item)
     set(push(ref(db, 'friendRequest/')), {
-      whosendid: auth.currentUser.uid,
-      whosendemail: auth.currentUser.email,
-      whosendimg: auth.currentUser.photoURL,
+      whosendid: logindata.uid,
+      whosendemail: logindata.email,
+      whosendimg: logindata.photoURL,
       whoreciveid:item.id,
       whorecivename: item.username,
       whoreciveimg: item.profile_picture
     })
   };
 
+  // remove friend request
   let handelCancelFRequest =(item)=>{
     remove(remove(ref(db, 'friendRequest/',item.id )))
-    // remove(ref(db, 'friendRequest'/)),
   }
 
   return (
@@ -69,14 +80,19 @@ const Usrlist = () => {
               <p>{item.email}</p>
             </div>
             <div className="profile__btn">
-            {friendRequest.includes(auth.currentUser.uid+item.id) || friendRequest.includes(item.id+auth.currentUser.uid)
+            {friendRequest.includes(logindata.uid+item.id)
             ?
               <Button onClick={()=>handelCancelFRequest(item)} variant="contained">
-                -
+                Cancel
               </Button>
 
             :
-
+            friendRequest.includes(item.id+logindata.uid)
+            ?
+            <Button variant="contained">
+              Pending
+            </Button>
+            :
               <Button onClick={()=>handelFRequest(item)} variant="contained">
                 +
               </Button>
@@ -86,6 +102,8 @@ const Usrlist = () => {
             </div>
           </div>
         </div>
+
+        
       ))}
     </div>
   );

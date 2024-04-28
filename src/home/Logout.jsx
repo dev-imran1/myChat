@@ -13,6 +13,7 @@ const Logout = () => {
   let handelSignOUt =()=>{
   console.log('ami logout');
   signOut(auth).then(() => {
+    localStorage.removeItem("user")
      notify("Logout Done")
       navigate("/login")
     })
