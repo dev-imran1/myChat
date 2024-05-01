@@ -5,63 +5,82 @@ import "./grouplist.css";
 import profile from "../assets/profile.png";
 import { Button } from "@mui/material";
 // import { getAuth } from "firebase/auth";
-import { getDatabase, ref, onValue, set, push, remove} from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { useSelector } from "react-redux";
-
 
 const Usrlist = () => {
   // const auth = getAuth();
   const db = getDatabase();
   let [userList, setUserList] = useState([]);
   let [friendRequest, setfriendRequest] = useState([]);
-  let logindata = useSelector((state) => state.logeduser.loginuser);
+  let [friends, setfriends] = useState([]);
+  let userData = useSelector((state) => state.logeduser.loginuser);
 
+  // console.log(userData)
 
-
-// friend request
+  // friend request
   useEffect(() => {
     const userRef = ref(db, "friendRequest/");
-    onValue(userRef, (snapshot) => { 
+    onValue(userRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val().whoreciveid + item.val().whosendid)
+        arr.push(item.val().whoreciveid + item.val().whosendid);
       });
       setfriendRequest(arr);
     });
   }, []);
 
-
-// user show
+  // user show
   useEffect(() => {
     const userRef = ref(db, "users/");
-    onValue(userRef, (snapshot) => { 
+    onValue(userRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        // if(logindata.uid != item.key){
-          arr.push({...item.val(), id: item.key});
-        // }
+        if (userData.uid != item.key) {
+          arr.push({ ...item.val(), id: item.key });
+        }
       });
       setUserList(arr);
     });
   }, []);
 
+  // freinds list
+  useEffect(() => {
+    const userRef = ref(db, "friends/");
+    onValue(userRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().whoreciveid + item.val().whosendid);
+      });
+      setfriends(arr);
+    });
+  }, []);
 
   // friend request create
   let handelFRequest = (item) => {
-    set(push(ref(db, 'friendRequest/')), {
-      whosendid: logindata.uid,
-      whosendemail: logindata.email,
-      whosendimg: logindata.photoURL,
-      whoreciveid:item.id,
+    // console.log(item)
+    set(push(ref(db, "friendRequest/")), {
+      whosendid: userData.uid,
+      whosendname: userData.displayName,
+      whosendemail: userData.email,
+      whosendimg: userData.photoURL,
+      whoreciveid: item.id,
       whorecivename: item.username,
-      whoreciveimg: item.profile_picture
-    })
+      whoreciveimg: item.profile_picture,
+    });
   };
 
-  // remove friend request
-  let handelCancelFRequest =(item)=>{
-    remove(remove(ref(db, 'friendRequest/',item.id )))
-  }
+  // remove friends
+  let handelUnfriend = (item) => {
+    remove(remove(ref(db, 'friends/',item.id )))
+  };
 
   return (
     <div className="main__wrapper">
@@ -80,30 +99,32 @@ const Usrlist = () => {
               <p>{item.email}</p>
             </div>
             <div className="profile__btn">
-            {friendRequest.includes(logindata.uid+item.id)
-            ?
-              <Button onClick={()=>handelCancelFRequest(item)} variant="contained">
-                Cancel
-              </Button>
-
-            :
-            friendRequest.includes(item.id+logindata.uid)
-            ?
-            <Button variant="contained">
-              Pending
-            </Button>
-            :
-              <Button onClick={()=>handelFRequest(item)} variant="contained">
-                +
-              </Button>
-            
-            
-            }
+              {friendRequest.includes(userData.uid + item.id) ? (
+                <Button variant="contained">Friend Request</Button>
+              ) : friendRequest.includes(item.id + userData.uid) ? (
+                <Button variant="contained">Pending</Button>
+              ) : friends.includes(item.id + userData.uid) ||
+                friends.includes(userData.uid + item.id) ? (
+                <div>
+                  <Button variant="contained">friend</Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => handelUnfriend(item)}
+                  >
+                    Unfriend
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  onClick={() => handelFRequest(item)}
+                  variant="contained"
+                >
+                  +
+                </Button>
+              )}
             </div>
           </div>
         </div>
-
-        
       ))}
     </div>
   );

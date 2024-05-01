@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Grid, TextField, Button, Alert } from "@mui/material";
 import "../pages/reglog.css";
 import Heading from "../components/Heading";
 import logimg from "../assets/logimg.png";
 import google from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import {GoogleAuthProvider,getAuth,signInWithPopup,signInWithEmailAndPassword,} from "firebase/auth";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userdata } from "../features/counter/counterSlice";
 
 const Registragion = () => {

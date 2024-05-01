@@ -14,9 +14,9 @@ import { useSelector } from "react-redux";
 const RootLayouts = () => {
   let location = useLocation();
   const auth = getAuth();
-  let logindata = useSelector((state)=>state.logeduser.loginuser)
+  let userData = useSelector((state)=>state.logeduser.loginuser)
 
-  // console.log(logindata)
+  // console.log(userData)
 
   return (
     <>
@@ -26,9 +26,8 @@ const RootLayouts = () => {
             <div className="navbar__container">
               <div>
                 <img src={profile} alt="" />
-                <h5 className="profile__name">{logindata.displayName}</h5>
-                <p className="profile__name">{logindata.email}</p>
-               
+                <h5 className="profile__name">{userData.displayName}</h5>
+                <p className="profile__name">{userData.email}</p>
               </div>
               <ul className="icon__box">
                 <li>
