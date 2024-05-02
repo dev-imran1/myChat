@@ -11,14 +11,13 @@ const Friend = () => {
   let [friendsList, setfriendsList]= useState([])
   const db = getDatabase();
 
-  console.log(friendsList)
 
   useEffect(() => {
     const userRef = ref(db, "friends/");
     onValue(userRef, (snapshot) => { 
       let arr = [];
       snapshot.forEach((item) => {
-        if(userData.uid == item.val().whoreciveid){
+        if(userData.uid == item.val().whoreciveid || userData.uid == item.val().whosendid){
           arr.push({...item.val(), id:item.key})
         }
       });
@@ -33,24 +32,33 @@ const Friend = () => {
       <UserTitle className="userTitle" text="Friends List" />
       <BsThreeDotsVertical />
     </div>
-    {friendsList && friendsList.length > 0
-    ?
-    friendsList.map((item)=>{
-      <div className="main__content">
+    {/* {friendsList && friendsList.length > 0 */}
+    {friendsList.map((item, index)=>(
+      <div key={index} className="main__content">
       <div className="profile__img">
-        <img src={item.whorecivename} alt="" />
+        {item.whoreciveid == userData.uid
+        ?
+        <img src={item.whosendimg} alt="" />
+        :
+        <img src={item.whoreciveimg} alt="" />
+      }
       </div>
       <div className="profile__details">
-        <h4>Friends Reunion</h4>
+        {item.whoreciveid == userData.uid
+        ?
+        <h4>{item.whosendname}</h4>
+        :
+        <h4>{item.whorecivename}</h4>
+      }
         <p>Hi Guys, Wassup!</p>
       </div>
       <div className="profile__btn">
       <Button variant="contained">join</Button>
       </div>
     </div>
-    })
-    :
-    <h1>No friend</h1>
+    ))
+    // :
+    // <h1>No friend</h1>
     }
   </div>
   );
