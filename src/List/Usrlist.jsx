@@ -21,6 +21,7 @@ const Usrlist = () => {
   let [userList, setUserList] = useState([]);
   let [friendRequest, setfriendRequest] = useState([]);
   let [friends, setfriends] = useState([]);
+  let [block, setBlock] = useState([]);
   let userData = useSelector((state) => state.logeduser.loginuser);
 
   // console.log(userData)
@@ -65,7 +66,6 @@ const Usrlist = () => {
 
   // friend request create
   let handelFRequest = (item) => {
-    // console.log(item)
     set(push(ref(db, "friendRequest/")), {
       whosendid: userData.uid,
       whosendname: userData.displayName,
@@ -77,11 +77,18 @@ const Usrlist = () => {
     });
   };
 
-  // remove friends
-  let handelUnfriend = (item) => {
-    remove(remove(ref(db, 'friends/',item.id )))
-  };
-
+  // block user
+  useEffect(() => {
+    const userRef = ref(db, "block/");
+    onValue(userRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().blockid + item.val().blockbyid);
+      });
+      setBlock(arr);
+    });
+  }, []);
+console.log(block)
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -107,14 +114,14 @@ const Usrlist = () => {
                 friends.includes(userData.uid + item.id) ? (
                 <div>
                   <Button variant="contained">friend</Button>
-                  <Button
-                    variant="contained"
-                    onClick={() => handelUnfriend(item)}
-                  >
-                    Unfriend
-                  </Button>
                 </div>
-              ) : (
+              ) :block.includes(userData.uid + item.id) || block.includes(item.id + userData.uid)
+              ?
+              (<div>
+              <Button variant="contained">Block</Button>
+            </div>)
+              :
+               (
                 <Button
                   onClick={() => handelFRequest(item)}
                   variant="contained"
