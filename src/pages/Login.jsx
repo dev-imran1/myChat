@@ -1,11 +1,16 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Button, Alert } from "@mui/material";
 import "../pages/reglog.css";
 import Heading from "../components/Heading";
 import logimg from "../assets/logimg.png";
 import google from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
-import {GoogleAuthProvider,getAuth,signInWithPopup,signInWithEmailAndPassword,} from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -59,7 +64,7 @@ const Registragion = () => {
       .then((user) => {
         if (user.user.emailVerified) {
           dispatch(userdata(user.user));
-          localStorage.setItem("user",JSON.stringify(user.user))
+          localStorage.setItem("user", JSON.stringify(user.user));
           notify("Login Done");
           navigate("/chatting-app/home");
         } else {

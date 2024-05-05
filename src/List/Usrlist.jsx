@@ -88,7 +88,7 @@ const Usrlist = () => {
       setBlock(arr);
     });
   }, []);
-console.log(block)
+  console.log(block);
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -115,13 +115,14 @@ console.log(block)
                 <div>
                   <Button variant="contained">friend</Button>
                 </div>
-              ) :block.includes(userData.uid + item.id) || block.includes(item.id + userData.uid)
-              ?
-              (<div>
-              <Button variant="contained">Block</Button>
-            </div>)
-              :
-               (
+              ) : block.includes(userData.uid + item.id) ||
+                block.includes(item.id + userData.uid) ? (
+                <div>
+                  <Button variant="contained" color="error">
+                    Block
+                  </Button>
+                </div>
+              ) : (
                 <Button
                   onClick={() => handelFRequest(item)}
                   variant="contained"

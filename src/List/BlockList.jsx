@@ -30,10 +30,9 @@ const BlockList = () => {
     });
   }, []);
 
-
-  let handelUnblock =(item)=>{
-    remove(remove(ref(db, 'block/',item.id )))
-  }
+  let handelUnblock = (item) => {
+    remove(remove(ref(db, "block/", item.id)));
+  };
 
   return (
     <div className="main__wrapper">
@@ -58,16 +57,24 @@ const BlockList = () => {
             )}
 
             {item.blockbyid == userData.uid ? (
-             <p> {item.blockid}</p>
+              <p> {item.blockid}</p>
             ) : (
               <h4>{item.blockbyid}</h4>
             )}
           </div>
           <div className="profile__btn">
-          {item.blockbyid == userData.uid ? (
-            <Button onClick={()=>handelUnblock(item)} variant="contained">Unblock</Button>
-          ) : (
-            <Button variant="contained">Block</Button>
+            {item.blockbyid == userData.uid ? (
+              <Button
+                onClick={() => handelUnblock(item)}
+                variant="contained"
+                color="success"
+              >
+                Unblock
+              </Button>
+            ) : (
+              <Button variant="contained" color="error">
+                Block
+              </Button>
             )}
           </div>
         </div>

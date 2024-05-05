@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 const RootLayouts = () => {
   let location = useLocation();
   const auth = getAuth();
-  let userData = useSelector((state)=>state.logeduser.loginuser)
+  let userData = useSelector((state) => state.logeduser.loginuser);
 
   // console.log(userData)
 
