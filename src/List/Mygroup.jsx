@@ -39,7 +39,7 @@ const Mygroup = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   let [groupInfo, setGroupInfo] = useState([initialValue]);
-  let [groups, setGroups] = useState([initialValue]);
+  let [myGroups, setMyGroups] = useState([]);
   let userData = useSelector((state) => state.logeduser.loginuser);
 
   let handelGroup = (e) => {
@@ -48,8 +48,6 @@ const Mygroup = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  console.log(userData)
 
   let handelClick = () => {
     let { groupname, grouptagline } = groupInfo;
@@ -73,7 +71,7 @@ const Mygroup = () => {
           arr.push({...item.val(),id:item.key});
         }
       });
-      setGroups(arr);
+      setMyGroups(arr);
     });
   }, []);
 
@@ -134,9 +132,9 @@ const Mygroup = () => {
           </Modal>
         </div>
       </div>
-      {groups && groups.length > 0 
+      {myGroups && myGroups.length > 0 
       ?
-      groups.map((item, index) => (
+      myGroups.map((item, index) => (
         <div key={index} className="main__content">
           <div className="profile__img">
             <img src={item.adminimg} alt="" />
