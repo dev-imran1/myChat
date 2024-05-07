@@ -77,7 +77,7 @@ const FriendRequest = () => {
           </div>
         ))
       ) : (
-        <h1>No Firend Request</h1>
+        <h1 className="nogroup">No Firend Request...</h1>
       )}
     </div>
   );

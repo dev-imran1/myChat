@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserTitle from "../components/UserTitle";
 import "./grouplist.css";
 import profile from "../assets/profile.png";
@@ -6,6 +6,7 @@ import { Button, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import { FaSearch } from "react-icons/fa";
 import {
   getDatabase,
   ref,
@@ -38,6 +39,7 @@ const Mygroup = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   let [groupInfo, setGroupInfo] = useState([initialValue]);
+  let [groups, setGroups] = useState([initialValue]);
   let userData = useSelector((state) => state.logeduser.loginuser);
 
   let handelGroup = (e) => {
@@ -47,18 +49,37 @@ const Mygroup = () => {
     });
   };
 
+  console.log(userData)
+
   let handelClick = () => {
     let { groupname, grouptagline } = groupInfo;
     set(push(ref(db, "mygroup")), {
       groupname: groupname,
       grouptagline: grouptagline,
       adminid: userData.uid,
-      adminname:userData.displayName
+      adminname: userData.displayName,
+      adminimg: userData.photoURL
     }).then(() => {
       setOpen(false);
     });
   };
 
+  useEffect(() => {
+    const groupRef = ref(db, "mygroup/");
+    onValue(groupRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (userData.uid == item.val().adminid) {
+          arr.push({...item.val(),id:item.key});
+        }
+      });
+      setGroups(arr);
+    });
+  }, []);
+
+  let handelDelete =(item)=>{
+    remove(remove(ref(db, "mygroup/", item.id)));
+  }
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -113,18 +134,26 @@ const Mygroup = () => {
           </Modal>
         </div>
       </div>
-      <div className="main__content">
-        <div className="profile__img">
-          <img src={profile} alt="" />
+      {groups && groups.length > 0 
+      ?
+      groups.map((item, index) => (
+        <div key={index} className="main__content">
+          <div className="profile__img">
+            <img src={item.adminimg} alt="" />
+          </div>
+          <div className="profile__details">
+            <h4>Admin Name: {item.adminname}</h4>
+            <h4>Group Name: {item.groupname}</h4>
+            <p style={{fontSize:"15px", fontWeight:"bold"}}>Group TagLine :{item.grouptagline}</p>
+          </div>
+          <div className="profile__btn">
+            <Button onClick={()=>handelDelete(item)} variant="contained">Delete</Button>
+          </div>
         </div>
-        <div className="profile__details">
-          <h4>Friends Reunion</h4>
-          <p>Hi Guys, Wassup!</p>
-        </div>
-        <div className="profile__btn">
-          <Button variant="contained">join</Button>
-        </div>
-      </div>
+      ))
+      :
+        <h3 className="nogroup">No Group...</h3>
+      }
     </div>
   );
 };
