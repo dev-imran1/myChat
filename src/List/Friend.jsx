@@ -36,7 +36,7 @@ const Friend = () => {
 
   // remove friends
   let handelUnfriend = (item) => {
-    remove(remove(ref(db, "friends/", item.id)));
+    remove(ref(db, "friends/", item.id));
   };
 
   // Block user
@@ -50,7 +50,7 @@ const Friend = () => {
           blockbyid: item.whosendid,
           blockbyimg: item.whosendimg,
         }).then(() => {
-          remove(remove(ref(db, "friends/", item.id)));
+          remove(ref(db, "friends/", item.id));
         })
       : set(push(ref(db, "block/")), {
           blockbyname: item.whorecivename,
@@ -60,7 +60,7 @@ const Friend = () => {
           blockid: item.whosendid,
           blockimg: item.whosendimg,
         }).then(() => {
-          remove(remove(ref(db, "friends/", item.id)));
+          remove(ref(db, "friends/", item.id));
         });
   };
 

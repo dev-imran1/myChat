@@ -31,7 +31,7 @@ const BlockList = () => {
   }, []);
 
   let handelUnblock = (item) => {
-    remove(remove(ref(db, "block/", item.id)));
+    remove(ref(db, "block/", item.id));
   };
 
   return (

@@ -76,7 +76,7 @@ const Mygroup = () => {
   }, []);
 
   let handelDelete =(item)=>{
-    remove(remove(ref(db, "mygroup/", item.id)));
+    remove(ref(db, "mygroup/", item.id));
   }
   return (
     <div className="main__wrapper">
