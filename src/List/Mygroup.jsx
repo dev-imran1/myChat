@@ -4,6 +4,13 @@ import "./grouplist.css";
 import profile from "../assets/profile.png";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 import { Button, TextField } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -37,12 +44,24 @@ const Mygroup = () => {
   let [myGroups, setMyGroups] = useState([]);
   let userData = useSelector((state) => state.logeduser.loginuser);
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-      setOpen(true);
-    };
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleOpen = (group) => {
+    const groupRef = ref(db, "grouprequest");
+      onValue(groupRef, (snapshot) => {
+        let arr = [];
+        snapshot.forEach(item => {
+          if (userData.uid == item.val().adminid && item.val().groupid == group.groupid) {
+          arr.push(item.val());
+          // console.log("item.val().groupid == group.groupid")
+          }
+        });
+        setMyGroupReqList(arr);
+      });
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   
   
 
@@ -103,11 +122,33 @@ const Mygroup = () => {
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Text in a child modal</h2>
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-          <Button onClick={handleClose}>Close Child Modal</Button>
+          <h2 id="child-modal-title">Group Request List</h2>
+          {/* <Button onClick={handleClose}>Close Child Modal</Button> */}
+            <></>
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+        <ListItemText
+          primary="Brunch this weekend?"
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                Ali Connors
+              </Typography>
+              {" — I'll be in your neighborhood doing errands this…"}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      </List>
         </Box>
       </Modal>
       </div>
