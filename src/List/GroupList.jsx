@@ -81,6 +81,7 @@ const GroupList = () => {
       groupid: item.groupid,
       username: userData.displayName,
       userid: userData.uid,
+      userimg: userData.photoURL
     });
   };
 
