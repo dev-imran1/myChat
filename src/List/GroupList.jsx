@@ -112,12 +112,16 @@ const GroupList = () => {
     onValue(groupRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val());
+        if(item.val().userid == userData.uid){
+          arr.push(item.val().groupid);
+        }
       });
       setMemberGrouplist(arr);
     });
   }, []);
 
+
+  console.log(memberGroupList)
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -156,7 +160,18 @@ const GroupList = () => {
                       Cancel
                     </Button>
                   </>
-                ) : (
+                ) : memberGroupList.indexOf(item.groupid) !== 1
+                ?
+                (
+                  <Button
+                    className="mybtn"
+                    variant="contained"
+                  >
+                    Member
+                  </Button>
+                )
+                :
+                (
                   <Button
                     className="mybtn"
                     onClick={() => handelJoingroup(item)}
