@@ -88,7 +88,10 @@ const Usrlist = () => {
       setBlock(arr);
     });
   }, []);
-  console.log(block);
+
+
+
+  
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">

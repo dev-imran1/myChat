@@ -77,8 +77,6 @@ const Mygroup = () => {
       });
       setMyGroups(arr);
     });
-
-
   }, []);
   
   let handelDelete = (item) => {
@@ -89,6 +87,16 @@ const Mygroup = () => {
     remove(ref(db, "grouprequest/", item.id));
   };
 
+  const handelAcceptMember =(member)=>{
+    set(push(ref(db, 'memberlist/')), {
+      ...member
+    }).then(()=>{
+      remove(ref(db, "grouprequest/", member.id));
+      setOpen(false);
+    })
+  }
+
+  
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -171,23 +179,22 @@ const Mygroup = () => {
                           </Typography>
                           <br />
                           {"Want's to join your group…"}
-                          <>
-                            <Button
+                          <div style={{display:"flex", justifyContent:"space-between",columnGap:"10px",marginTop:"10px"}}>
+                            <Button onClick={()=>handelAcceptMember(item)}
+                            style={{marginBottom:"15px"}}
                               color="success"
-                              className="mybtn"
                               variant="contained"
                             >
                               accept
                             </Button>
                             <Button
                               onClick={() => handelCancelMermber(item)}
-                              className="mybtn"
                               color="error"
                               variant="contained"
                             >
-                              Cancel
+                              X
                             </Button>
-                          </>
+                          </div>
                         </React.Fragment>
                       }
                     />

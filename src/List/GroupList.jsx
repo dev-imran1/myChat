@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserTitle from "../components/UserTitle";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import "./grouplist.css";
-import profile from "../assets/profile.png";
 import { Button, TextField } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 import Box from "@mui/material/Box";
@@ -30,22 +28,21 @@ const style = {
   p: 4,
 };
 
-
 const GroupList = () => {
   let initialValue = {
     groupname: "",
     grouptagline: "",
   };
-  
 
   const db = getDatabase();
   let [groups, setGroups] = useState([]);
   let [groupMember, setGroupMermber] = useState([]);
+  let [memberGroupList, setMemberGrouplist] = useState([]);
   let [groupInfo, setGroupInfo] = useState([initialValue]);
-  let userData = useSelector((state) => state.logeduser.loginuser);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  let userData = useSelector((state) => state.logeduser.loginuser);
 
   let handelClick = () => {
     let { groupname, grouptagline } = groupInfo;
@@ -54,12 +51,12 @@ const GroupList = () => {
       grouptagline: grouptagline,
       adminid: userData.uid,
       adminname: userData.displayName,
-      adminimg: userData.photoURL
+      adminimg: userData.photoURL,
     }).then(() => {
       setOpen(false);
     });
   };
-  
+
   useEffect(() => {
     const groupRef = ref(db, "mygroup/");
     onValue(groupRef, (snapshot) => {
@@ -73,7 +70,7 @@ const GroupList = () => {
     });
   }, []);
 
-  const handelgroup = (item) => {
+  const handelJoingroup = (item) => {
     set(push(ref(db, "grouprequest/")), {
       adminid: item.adminid,
       adminname: item.adminname,
@@ -81,16 +78,16 @@ const GroupList = () => {
       groupid: item.groupid,
       username: userData.displayName,
       userid: userData.uid,
-      userimg: userData.photoURL
+      userimg: userData.photoURL,
     });
   };
 
   useEffect(() => {
-    const grouplist = ref(db, "grouprequest/");
-    onValue(grouplist, (snapshot) => {
+    const grouplists = ref(db, "grouprequest/");
+    onValue(grouplists, (snapshot) => {
       let arr = [];
-      snapshot.forEach((item) => {
-        if (item.val().userid == userData.uid) {
+      snapshot.forEach(item => {
+       if (item.val().userid == userData.uid) {
           arr.push(item.val().groupid);
         }
       });
@@ -98,9 +95,10 @@ const GroupList = () => {
     });
   }, []);
 
-  let handelCancelMember =(item)=>{
-      remove(ref(db, "grouprequest/", item.groupid));
-  }
+
+    let handelCancelMember = (item) => {
+      remove(ref(db, "grouprequest/", item.id));
+    };
 
   let handelGroup = (e) => {
     setGroupInfo({
@@ -109,15 +107,24 @@ const GroupList = () => {
     });
   };
 
-
+  useEffect(() => {
+    const groupRef = ref(db, "memberlist/");
+    onValue(groupRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val());
+      });
+      setMemberGrouplist(arr);
+    });
+  }, []);
 
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
         <UserTitle className="userTitle" text="Group List" />
         <Button className="mybtn" onClick={handleOpen} variant="contained">
-            +Group
-          </Button>
+          +Group
+        </Button>
       </div>
       {groups && groups.length > 0
         ? groups.map((item, index) => (
@@ -133,10 +140,16 @@ const GroupList = () => {
                 </p>
               </div>
               <div className="profile__btn">
-                {groupMember.indexOf(item.groupid) !== -1 ? (
+                
+                {groupMember.indexOf(item.groupid) !== -1
+                ? 
+                (
                   <>
-                    <Button className="mybtn" variant="contained">Pending</Button>
-                    <Button className="mybtn"
+                    <Button className="mybtn" variant="contained">
+                      Pending
+                    </Button>
+                    <Button
+                      className="mybtn"
                       onClick={() => handelCancelMember(item)}
                       variant="contained"
                     >
@@ -144,7 +157,11 @@ const GroupList = () => {
                     </Button>
                   </>
                 ) : (
-                  <Button className="mybtn" onClick={() => handelgroup(item)} variant="contained">
+                  <Button
+                    className="mybtn"
+                    onClick={() => handelJoingroup(item)}
+                    variant="contained"
+                  >
                     Join
                   </Button>
                 )}
@@ -152,52 +169,48 @@ const GroupList = () => {
             </div>
           ))
         : "no data"}
-        <div>
+      <div>
         <Modal
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="keep-mounted-modal-title"
-            aria-describedby="keep-mounted-modal-description"
-          >
-            <Box sx={style}>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h2"
-              >
-                Create New Group
-              </Typography>
-              <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-                <TextField
-                  onChange={handelGroup}
-                  fullWidth
-                  margin="dense"
-                  id="outlined-basic"
-                  label="Group Name"
-                  variant="filled"
-                  name="groupname"
-                />
-                <TextField
-                  onChange={handelGroup}
-                  fullWidth
-                  margin="dense"
-                  id="outlined-basic"
-                  label="Group Tagline"
-                  variant="filled"
-                  name="grouptagline"
-                />
-                <Button
-                  onClick={handelClick}
-                  margin="dense"
-                  variant="contained"
-                >
-                  Submit
-                </Button>
-              </Typography>
-            </Box>
-          </Modal>
-        </div>
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <Box sx={style}>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              Create New Group
+            </Typography>
+            <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
+              <TextField
+                onChange={handelGroup}
+                fullWidth
+                margin="dense"
+                id="outlined-basic"
+                label="Group Name"
+                variant="filled"
+                name="groupname"
+              />
+              <TextField
+                onChange={handelGroup}
+                fullWidth
+                margin="dense"
+                id="outlined-basic"
+                label="Group Tagline"
+                variant="filled"
+                name="grouptagline"
+              />
+              <Button onClick={handelClick} margin="dense" variant="contained">
+                Submit
+              </Button>
+            </Typography>
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 };
