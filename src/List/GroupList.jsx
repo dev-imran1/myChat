@@ -97,7 +97,7 @@ const GroupList = () => {
 
 
     let handelCancelMember = (item) => {
-      remove(ref(db, "grouprequest/", item.id));
+      remove(ref(db, "grouprequest/"+ item.id));
     };
 
   let handelGroup = (e) => {
@@ -120,8 +120,6 @@ const GroupList = () => {
     });
   }, []);
 
-
-  console.log(memberGroupList)
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -135,6 +133,7 @@ const GroupList = () => {
             <div key={index} className="main__content">
               <div className="profile__img">
                 <img src={item.adminimg} alt="" />
+                <h1>{console.log(item)}</h1>
               </div>
               <div className="profile__details">
                 <h4>Admin Name: {item.adminname}</h4>

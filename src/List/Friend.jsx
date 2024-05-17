@@ -30,19 +30,18 @@ const Friend = () => {
           arr.push({ ...item.val(), id: item.key });
         }
       });
-      setfriendsList(arr);
+      setfriendsList([...arr]);
     });
   }, []);
-
   // remove friends
   let handelUnfriend = (item) => {
-    remove(ref(db, "friends/", item.id));
+    remove(ref(db, "friends/" + item.id));
   };
 
   // Block user
   let handelBlock = (item) => {
     userData.uid == item.whosendid
-      ? set(push(ref(db, "block/")), {
+      ? set(push(ref(db, "block")), {
           blockname: item.whorecivename,
           blockid: item.whoreciveid,
           blockimg: item.whoreciveimg,
@@ -50,9 +49,9 @@ const Friend = () => {
           blockbyid: item.whosendid,
           blockbyimg: item.whosendimg,
         }).then(() => {
-          remove(ref(db, "friends/", item.id));
+          remove(ref(db, "friends/"+ item.id));
         })
-      : set(push(ref(db, "block/")), {
+      : set(push(ref(db, "block")), {
           blockbyname: item.whorecivename,
           blockbyid: item.whoreciveid,
           blockbyimg: item.whoreciveimg,
@@ -60,7 +59,7 @@ const Friend = () => {
           blockid: item.whosendid,
           blockimg: item.whosendimg,
         }).then(() => {
-          remove(ref(db, "friends/", item.id));
+          remove(ref(db, "friends/" + item.id));
         });
   };
 

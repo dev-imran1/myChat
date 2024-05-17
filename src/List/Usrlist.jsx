@@ -64,9 +64,8 @@ const Usrlist = () => {
     });
   }, []);
 
-  // friend request create
   let handelFRequest = (item) => {
-    set(push(ref(db, "friendRequest/")), {
+    set(push(ref(db, "friendRequest")), {
       whosendid: userData.uid,
       whosendname: userData.displayName,
       whosendemail: userData.email,

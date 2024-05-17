@@ -31,14 +31,15 @@ const FriendRequest = () => {
   }, []);
 
   let handelCancelFRequest = (item) => {
-    remove(ref(db, "friendRequest/", item.id));
+    remove(ref(db, "friendRequest/"+ item.id));
   };
 
   let handelAccept = (item) => {
-    set(push(ref(db, "friends/")), {
+   
+    set(push(ref(db, "friends")), {
       ...item,
     }).then(() => {
-      remove(ref(db, "friendRequest/", item.id));
+      remove(ref(db, "friendRequest/"+ item.id));
     });
   };
 

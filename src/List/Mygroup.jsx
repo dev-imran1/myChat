@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserTitle from "../components/UserTitle";
 import "./grouplist.css";
-import profile from "../assets/profile.png";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import List from "@mui/material/List";
@@ -11,8 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { Button, TextField } from "@mui/material";
-import { FaSearch } from "react-icons/fa";
+import { Button } from "@mui/material";
 import {
   getDatabase,
   ref,
@@ -42,6 +40,7 @@ const Mygroup = () => {
 
   let [myGroups, setMyGroups] = useState([]);
   let [myGroupsReqList, setMyGroupReqList] = useState([]);
+  let [memberReqList, setMymemberReqList] = useState([]);
   let userData = useSelector((state) => state.logeduser.loginuser);
   const [open, setOpen] = useState(false);
 
@@ -54,13 +53,32 @@ const Mygroup = () => {
           userData.uid == item.val().adminid &&
           item.val().groupid == group.id
         ) {
-          arr.push({...item.val(),id:item.key});
+          arr.push({ ...item.val(), id: item.key });
         }
       });
       setMyGroupReqList(arr);
     });
     setOpen(true);
   };
+
+  const handelMember = (group) => {
+    const memberREf = ref(db, "memberlist");
+    onValue(memberREf, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (
+          userData.uid == item.val().adminid &&
+          item.val().groupid == group.id
+        ) {
+          arr.push({ ...item.val(), id: item.key });
+        }
+      });
+      setMymemberReqList(arr);
+    });
+    setOpen(true);
+  };
+
+console.log(memberReqList)
 
   const handleClose = () => {
     setOpen(false);
@@ -78,7 +96,7 @@ const Mygroup = () => {
       setMyGroups(arr);
     });
   }, []);
-  
+
   let handelDelete = (item) => {
     remove(ref(db, "mygroup/", item.id));
   };
@@ -87,16 +105,15 @@ const Mygroup = () => {
     remove(ref(db, "grouprequest/", item.id));
   };
 
-  const handelAcceptMember =(member)=>{
-    set(push(ref(db, 'memberlist/')), {
-      ...member
-    }).then(()=>{
+  const handelAcceptMember = (member) => {
+    set(push(ref(db, "memberlist/")), {
+      ...member,
+    }).then(() => {
       remove(ref(db, "grouprequest/", member.id));
       setOpen(false);
-    })
-  }
+    });
+  };
 
-  
   return (
     <div className="main__wrapper">
       <div className="title__wrapper">
@@ -125,7 +142,7 @@ const Mygroup = () => {
                 >
                   Request
                 </Button>
-                <Button className="mybtn" variant="contained">
+                <Button onClick={()=>handelMember(item)} className="mybtn" variant="contained">
                   Members
                 </Button>
                 <Button
@@ -179,9 +196,17 @@ const Mygroup = () => {
                           </Typography>
                           <br />
                           {"Want's to join your group…"}
-                          <div style={{display:"flex", justifyContent:"space-between",columnGap:"10px",marginTop:"10px"}}>
-                            <Button onClick={()=>handelAcceptMember(item)}
-                            style={{marginBottom:"15px"}}
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              columnGap: "10px",
+                              marginTop: "10px",
+                            }}
+                          >
+                            <Button
+                              onClick={() => handelAcceptMember(item)}
+                              style={{ marginBottom: "15px" }}
                               color="success"
                               variant="contained"
                             >
