@@ -71,7 +71,7 @@ const GroupList = () => {
   }, []);
 
   const handelJoingroup = (item) => {
-    set(push(ref(db, "grouprequest/")), {
+    set(push(ref(db, "grouprequest")), {
       adminid: item.adminid,
       adminname: item.adminname,
       groupname: item.groupname,
@@ -95,9 +95,9 @@ const GroupList = () => {
     });
   }, []);
 
-
     let handelCancelMember = (item) => {
-      remove(ref(db, "grouprequest/"+ item.id));
+      console.log("cancel", item)
+      remove(ref(db, "grouprequest/"+ item.groupid));
     };
 
   let handelGroup = (e) => {
@@ -133,7 +133,6 @@ const GroupList = () => {
             <div key={index} className="main__content">
               <div className="profile__img">
                 <img src={item.adminimg} alt="" />
-                <h1>{console.log(item)}</h1>
               </div>
               <div className="profile__details">
                 <h4>Admin Name: {item.adminname}</h4>
@@ -159,7 +158,8 @@ const GroupList = () => {
                       Cancel
                     </Button>
                   </>
-                ) : memberGroupList.indexOf(item.groupid) !== 1
+                )
+                 : memberGroupList.indexOf(item.groupid) !== -1
                 ?
                 (
                   <Button

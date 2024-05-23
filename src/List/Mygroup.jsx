@@ -78,8 +78,6 @@ const Mygroup = () => {
     setOpen(true);
   };
 
-console.log(memberReqList)
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -98,18 +96,19 @@ console.log(memberReqList)
   }, []);
 
   let handelDelete = (item) => {
-    remove(ref(db, "mygroup/", item.id));
+    remove(ref(db, "mygroup/"+ item.id));
   };
 
   const handelCancelMermber = (item) => {
-    remove(ref(db, "grouprequest/", item.id));
+    remove(ref(db, "grouprequest/"+ item.id));
   };
 
   const handelAcceptMember = (member) => {
-    set(push(ref(db, "memberlist/")), {
+    console.log(member)
+    set(push(ref(db, "memberlist")), {
       ...member,
     }).then(() => {
-      remove(ref(db, "grouprequest/", member.id));
+      remove(ref(db, "grouprequest/" + member.id));
       setOpen(false);
     });
   };
