@@ -86,7 +86,7 @@ const Usrlist = () => {
       });
       setBlock(arr);
     });
-  }, []);
+  },[]);
 
 
 

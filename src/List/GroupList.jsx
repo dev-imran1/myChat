@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import UserTitle from "../components/UserTitle";
 import "./grouplist.css";
 import { Button, TextField } from "@mui/material";
-import { FaSearch } from "react-icons/fa";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
@@ -86,19 +85,29 @@ const GroupList = () => {
     const grouplists = ref(db, "grouprequest/");
     onValue(grouplists, (snapshot) => {
       let arr = [];
-      snapshot.forEach(item => {
-       if (item.val().userid == userData.uid) {
+      snapshot.forEach((item) => {
+        if (item.val().userid == userData.uid) {
           arr.push(item.val().groupid);
+          // arr.push({ ...item.val().groupid, id: item.key });
         }
       });
       setGroupMermber(arr);
     });
   }, []);
 
-    let handelCancelMember = (item) => {
-      console.log("cancel", item)
-      remove(ref(db, "grouprequest/"+ item.groupid));
-    };
+  let handelCancelMember = (item) => {
+    console.log("cancel", item), "button items";
+    const starCancelRef = ref(db, "grouprequest");
+    let reqIds = "";
+    onValue(starCancelRef, (snapshot) => {
+      snapshot.forEach((items) => {
+        if (items.val().groupid == item.groupid) {
+          reqIds = items.key;
+        }
+      });
+    });
+    remove(ref(db, "grouprequest/" + reqIds));
+  };
 
   let handelGroup = (e) => {
     setGroupInfo({
@@ -112,7 +121,7 @@ const GroupList = () => {
     onValue(groupRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if(item.val().userid == userData.uid){
+        if (item.val().userid == userData.uid) {
           arr.push(item.val().groupid);
         }
       });
@@ -140,12 +149,10 @@ const GroupList = () => {
                 <p style={{ fontSize: "15px", fontWeight: "bold" }}>
                   Group TagLine :{item.grouptagline}
                 </p>
+                <h4>{console.log(item.groupid)}</h4>
               </div>
               <div className="profile__btn">
-                
-                {groupMember.indexOf(item.groupid) !== -1
-                ? 
-                (
+                {groupMember.indexOf(item.groupid) !== -1 ? (
                   <>
                     <Button className="mybtn" variant="contained">
                       Pending
@@ -158,19 +165,11 @@ const GroupList = () => {
                       Cancel
                     </Button>
                   </>
-                )
-                 : memberGroupList.indexOf(item.groupid) !== -1
-                ?
-                (
-                  <Button
-                    className="mybtn"
-                    variant="contained"
-                  >
+                ) : memberGroupList.indexOf(item.groupid) !== -1 ? (
+                  <Button className="mybtn" variant="contained">
                     Member
                   </Button>
-                )
-                :
-                (
+                ) : (
                   <Button
                     className="mybtn"
                     onClick={() => handelJoingroup(item)}
