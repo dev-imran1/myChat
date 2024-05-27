@@ -19,6 +19,7 @@ const ChatBox = () => {
         </div>
       </div>
       <div className="msgbox">
+        {/* message stat */}
         {/* <div className="msgitem">
         <p className="getmsg">Hello</p>
         <time>today:5:15am</time>
@@ -27,7 +28,12 @@ const ChatBox = () => {
         <p className="sendmsg">hi</p>
         <time>today:5:15am</time>
         </div> */}
-        <div className="msgitem">
+
+        {/* message end */}
+
+        {/* image popup stat */}
+
+        {/* <div className="msgitem">
           <p className="sendimg">
             <ModalImage small={regimg} large={regimg} alt="Hello World!" />
           </p>
@@ -36,21 +42,40 @@ const ChatBox = () => {
           <p className="getimg">
             <ModalImage small={regimg} large={regimg} alt="Hello World!" />
           </p>
+        </div> */}
+
+        {/* image popup end */}
+
+        {/* audio stat */}
+        <div className="msgitem">
+          <p className="getaudio">
+            <audio controls></audio>
+          </p>
         </div>
         <div className="msgitem">
-          <p className="getmsg">Hello</p>
+          <p className="sendaudio">
+            <audio controls></audio>
+          </p>
+        </div>
+
+        {/* audio end */}
+
+        <div className="msgitem">
+          <p className="getvideo">
+            <video width="320" height="240" controls>
+              <source src="movie.mp4" type="video/mp4" />
+              <source src="movie.ogg" type="video/ogg" />
+            </video>
+          </p>
           <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-          <p className="sendmsg">hi</p>
-          <time>today:5:15am</time>
-        </div>
-        <div className="msgitem">
-          <p className="getmsg">Hello</p>
-          <time>today:5:15am</time>
-        </div>
-        <div className="msgitem">
-          <p className="sendmsg">hi</p>
+          <p className="sendvideo">
+            <video width="320" height="240" controls>
+              <source src="movie.mp4" type="video/mp4" />
+              <source src="movie.ogg" type="video/ogg" />
+            </video>
+          </p>
           <time>today:5:15am</time>
         </div>
         <div className="msgitem">
