@@ -33,10 +33,6 @@ const MsgFriend = () => {
       setfriendsList([...arr]);
     });
   }, []);
-  // remove friends
-  let handelUnfriend = (item) => {
-    remove(ref(db, "friends/" + item.id));
-  };
 
   // Block user
   let handelBlock = (item) => {

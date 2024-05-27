@@ -16,7 +16,48 @@ const ChatBox = () => {
           <h3 className="name">online</h3>
         </div>
       </div>
-      <div>msg</div>
+      <div className="msgbox">
+        <div className="msgitem">
+        <p className="getmsg">Hello</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="sentmsg">hi</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="getmsg">Hello</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="sentmsg">hi</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="getmsg">Hello</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="sentmsg">hi</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="getmsg">Hello</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="sentmsg">hi</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="getmsg">Hello</p>
+        <time>today:5:15am</time>
+        </div>
+        <div className="msgitem">
+        <p className="sentmsg">hi</p>
+        <time>today:5:15am</time>
+        </div>
+      </div>
       <div>tye</div>
     </div>
   );

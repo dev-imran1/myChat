@@ -2,7 +2,16 @@
 
 .chatbox{
     width: 90%;
-    height: 100%;
+    /* height: 100%; */
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+    box-shadow: 10px 10px 5px lightblue;
+    padding: 25px;
+    box-sizing: border-box;
+    margin: auto;
 }
 .profile{
     display: flex;
@@ -49,4 +58,72 @@
 
 .name {
     color: black;
+}
+
+.msgbox{
+    height: 80vh;
+    overflow-y: scroll;
+   
+}
+.msgitem{
+    display: flex;
+    flex-direction: column;
+}
+.getmsg{
+    background-color: rgb(194, 206, 206);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding: 13px 52px;
+    display: inline-block;
+    margin: 10px 0;
+    position: relative;
+    align-self: flex-start;
+    margin-bottom: 20px;
+}  
+.getmsg+time{
+    align-self: flex-start;
+}
+.getmsg::after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0px;
+    right: auto;
+    top: auto;
+    bottom: -20px;
+    border: 22px solid;
+    border-color: transparent transparent transparent rgb(194, 206, 206);
+}
+.sentmsg{
+    background-color: rgb(87, 144, 231);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding: 13px 52px;
+    display: inline-block;
+    margin: 10px 0;
+    position: relative;
+    align-self: flex-end;
+    margin-bottom: 20px;
+}  
+
+.sentmsg::after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: -16px;
+    top: auto;
+    bottom: -20px;
+    border: 22px solid;
+    border-color: transparent transparent transparent rgb(87, 144, 231);
+}
+.sentmsg+time{
+    align-self: flex-end;
 }
