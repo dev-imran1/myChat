@@ -163,7 +163,7 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    padding: 7px;
+    padding: 3px;
     display: inline-block;
     margin: 10px 0;
     position: relative;
@@ -171,7 +171,7 @@
     margin-bottom: 20px;
     width: 250px;
     height: 250px;
-    border: 5px solid blueviolet;
+    border: 2px solid blueviolet;
 }
 
 .sendimg>div>img {
@@ -243,4 +243,29 @@
     position: relative;
     align-self: flex-end;
     margin-bottom: 20px;
+}
+.msgwirtecontainer{
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid black;
+    padding-top: 10px;
+}
+.msgWrite{
+    width: 80%;
+}
+.msgWrite input{
+    width: 100%;
+    font-size: 20px;
+    background-color: #f1f1f1;
+    padding: 20px 10px;
+    border: 0;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+
+}
+.msgsend{
+    width: 15%;
 }

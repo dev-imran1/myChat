@@ -1,14 +1,11 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import Friend from "../List/Friend";
 import "./message.css";
 import MsgGroup from "../List/MsgGroup";
 import ChatBox from "../List/ChatBox";
 import MsgFriend from "../List/MsgFriend";
 
 const Message = () => {
-  // let logindata = useSelector((state) => state.logeduser.loginuser);
-
   return (
     <div className="box">
       <Grid container spacing={0}>

@@ -4,6 +4,9 @@ import "./chatbox.css";
 // import { BsThreeDotsVertical } from "react-icons/bs";
 import regimg from "../assets/regimg.png";
 import ModalImage from "react-modal-image";
+import { Button } from "@mui/material";
+import { FiSend } from "react-icons/fi";
+
 
 const ChatBox = () => {
   return (
@@ -20,20 +23,20 @@ const ChatBox = () => {
       </div>
       <div className="msgbox">
         {/* message stat */}
-        {/* <div className="msgitem">
-        <p className="getmsg">Hello</p>
-        <time>today:5:15am</time>
+        <div className="msgitem">
+          <p className="getmsg">Hello</p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="sendmsg">hi</p>
-        <time>today:5:15am</time>
-        </div> */}
+          <p className="sendmsg">hi</p>
+          <time>today:5:15am</time>
+        </div>
 
         {/* message end */}
 
         {/* image popup stat */}
 
-        {/* <div className="msgitem">
+        <div className="msgitem">
           <p className="sendimg">
             <ModalImage small={regimg} large={regimg} alt="Hello World!" />
           </p>
@@ -42,7 +45,7 @@ const ChatBox = () => {
           <p className="getimg">
             <ModalImage small={regimg} large={regimg} alt="Hello World!" />
           </p>
-        </div> */}
+        </div>
 
         {/* image popup end */}
 
@@ -59,6 +62,7 @@ const ChatBox = () => {
         </div>
 
         {/* audio end */}
+        {/* vidio start */}
 
         <div className="msgitem">
           <p className="getvideo">
@@ -78,6 +82,9 @@ const ChatBox = () => {
           </p>
           <time>today:5:15am</time>
         </div>
+
+        {/* vidio end */}
+
         <div className="msgitem">
           <p className="getmsg">Hello</p>
           <time>today:5:15am</time>
@@ -87,7 +94,17 @@ const ChatBox = () => {
           <time>today:5:15am</time>
         </div>
       </div>
-      <div>31 minutes</div>
+      <div className="msgwirtecontainer">
+        <div className="msgWrite">
+          <input type="text" />
+        </div>
+        <Button className="msgsend"
+          variant="contained"
+          color="success"
+        >
+          <FiSend />
+        </Button>
+      </div>
     </div>
   );
 };
