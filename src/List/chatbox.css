@@ -1,6 +1,4 @@
-
-
-.chatbox{
+.chatbox {
     width: 90%;
     /* height: 100%; */
     border-radius: 25px;
@@ -13,11 +11,13 @@
     box-sizing: border-box;
     margin: auto;
 }
-.profile{
+
+.profile {
     display: flex;
     border-bottom: 2px solid rgb(0, 0, 0, .65);
     padding: 20px 0;
 }
+
 .signal {
     width: 65px;
     height: 65px;
@@ -60,16 +60,18 @@
     color: black;
 }
 
-.msgbox{
+.msgbox {
     height: 80vh;
     overflow-y: scroll;
-   
+
 }
-.msgitem{
+
+.msgitem {
     display: flex;
     flex-direction: column;
 }
-.getmsg{
+
+.getmsg {
     background-color: rgb(194, 206, 206);
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -82,11 +84,36 @@
     position: relative;
     align-self: flex-start;
     margin-bottom: 20px;
-}  
-.getmsg+time{
+}
+
+.getimg {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding: 7px;
+    display: inline-block;
+    margin: 10px 0;
+    position: relative;
+    align-self: flex-start;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 250px;
+}
+
+.getimg > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.getmsg+time {
     align-self: flex-start;
 }
-.getmsg::after{
+
+.getmsg::after {
     content: ' ';
     position: absolute;
     width: 0;
@@ -98,7 +125,8 @@
     border: 22px solid;
     border-color: transparent transparent transparent rgb(194, 206, 206);
 }
-.sentmsg{
+
+.sendmsg {
     background-color: rgb(87, 144, 231);
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -111,9 +139,9 @@
     position: relative;
     align-self: flex-end;
     margin-bottom: 20px;
-}  
+}
 
-.sentmsg::after{
+.sendmsg::after {
     content: ' ';
     position: absolute;
     width: 0;
@@ -124,6 +152,42 @@
     border: 22px solid;
     border-color: transparent transparent transparent rgb(87, 144, 231);
 }
-.sentmsg+time{
+
+.sendmsg+time {
     align-self: flex-end;
+}
+
+.sendimg {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding: 7px;
+    display: inline-block;
+    margin: 10px 0;
+    position: relative;
+    align-self: flex-end;
+    margin-bottom: 20px;
+    width: 250px;
+    height: 250px;
+    border: 5px solid blueviolet;
+}
+
+.sendimg > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.sendimg > div{
+    /* width: 100%; */
+    height: 100%;
+}
+
+.getimg > div{
+    /* width: 100%; */
+    height: 100%;
+    /* object-fit: cover; */
 }

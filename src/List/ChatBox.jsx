@@ -1,7 +1,9 @@
 import React from "react";
 import profile from "../assets/profile.png";
 import "./chatbox.css";
-import { BsThreeDotsVertical } from "react-icons/bs";
+// import { BsThreeDotsVertical } from "react-icons/bs";
+import regimg from "../assets/regimg.png";
+import ModalImage from "react-modal-image";
 
 const ChatBox = () => {
   return (
@@ -17,48 +19,50 @@ const ChatBox = () => {
         </div>
       </div>
       <div className="msgbox">
-        <div className="msgitem">
+        {/* <div className="msgitem">
         <p className="getmsg">Hello</p>
         <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="sentmsg">hi</p>
+        <p className="sendmsg">hi</p>
         <time>today:5:15am</time>
+        </div> */}
+        <div className="msgitem">
+          <p className="sendimg">
+            <ModalImage small={regimg} large={regimg} alt="Hello World!" />
+          </p>
         </div>
         <div className="msgitem">
-        <p className="getmsg">Hello</p>
-        <time>today:5:15am</time>
+          <p className="getimg">
+            <ModalImage small={regimg} large={regimg} alt="Hello World!" />
+          </p>
         </div>
         <div className="msgitem">
-        <p className="sentmsg">hi</p>
-        <time>today:5:15am</time>
+          <p className="getmsg">Hello</p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="getmsg">Hello</p>
-        <time>today:5:15am</time>
+          <p className="sendmsg">hi</p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="sentmsg">hi</p>
-        <time>today:5:15am</time>
+          <p className="getmsg">Hello</p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="getmsg">Hello</p>
-        <time>today:5:15am</time>
+          <p className="sendmsg">hi</p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="sentmsg">hi</p>
-        <time>today:5:15am</time>
+          <p className="getmsg">Hello</p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
-        <p className="getmsg">Hello</p>
-        <time>today:5:15am</time>
-        </div>
-        <div className="msgitem">
-        <p className="sentmsg">hi</p>
-        <time>today:5:15am</time>
+          <p className="sendmsg">hi</p>
+          <time>today:5:15am</time>
         </div>
       </div>
-      <div>tye</div>
+      <div>31 minutes</div>
     </div>
   );
 };
