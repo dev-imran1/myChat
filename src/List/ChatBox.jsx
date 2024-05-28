@@ -40,11 +40,13 @@ const ChatBox = () => {
           <p className="sendimg">
             <ModalImage small={regimg} large={regimg} alt="Hello World!" />
           </p>
+          <time>today:5:15am</time>
         </div>
         <div className="msgitem">
           <p className="getimg">
             <ModalImage small={regimg} large={regimg} alt="Hello World!" />
           </p>
+          <time>today:5:15am</time>
         </div>
 
         {/* image popup end */}
@@ -54,11 +56,13 @@ const ChatBox = () => {
           <p className="getaudio">
             <audio controls></audio>
           </p>
+            <time>today:5:15am</time>
         </div>
         <div className="msgitem">
           <p className="sendaudio">
             <audio controls></audio>
           </p>
+          <time>today:5:15am</time>
         </div>
 
         {/* audio end */}
